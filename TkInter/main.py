@@ -76,7 +76,8 @@ notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 for note in notes:
     list.insert("end", note)
 
-buttonAjouter = tk.Button(frameGenerator, text="")
+buttonAjouter = tk.Button(frameGenerator, text="ok")
+buttonAjouter.pack(side="bottom")
 
 frame.pack()
 
