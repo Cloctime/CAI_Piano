@@ -11,9 +11,11 @@ from frequencies import octave_min_max
 from wav_create_notes_from_frequencies_db import generate_notes
 
 
-def generateOctaves():
-    octave_min_max(2,3)
+def generateOctaves(min, max):
+    octave_min_max(min, max)
     generate_notes()
+
+
 
 
 def fetchEntry(button):
@@ -56,7 +58,7 @@ if __name__ == "__main__" :
     e2 = tk.Entry(mw)
 
 
-    boutonGenerate = tk.Button(frame, text="generate octaves",command=lambda :generateOctaves())   #lambda pour éviter d'appeler dès l'exécution !!!
+    boutonGenerate = tk.Button(frame, text="generate octaves",command=lambda :generateOctaves(2,3))   #lambda pour éviter d'appeler dès l'exécution !!!
     #boutontest = tk.Button(frame, text="test",command=lambda :print(type(fetchEntry(e1))))
     frame.pack()
     boutonGenerate.pack()

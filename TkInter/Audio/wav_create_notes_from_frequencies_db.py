@@ -48,18 +48,14 @@ def create_note_wav(degree,name,left_frequency,right_frequency) :
     sound.close()
 
 def generate_notes():
-    #detruit du dossier Sounds puis le recréer
-    if os.path.isdir("Sounds"):
-        shutil.rmtree("Sounds")
-    os.mkdir("Sounds")
-
     connect = sqlite3.connect("Audio/frequencies.db")
     cursor = connect.cursor()
     gammes=cursor.execute("SELECT * FROM frequencies")
     notes=["octave","C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
     for gamme in gammes :
         for i in range(1,len(gamme)) :
-                        create_note_wav(gamme[0],notes[i],gamme[i],2*gamme[i])
+            if not os.path.isfile("Sounds/"+str(notes[i])+str(gamme[0])+".wav"):
+                create_note_wav(gamme[0],notes[i],gamme[i],2*gamme[i])
 
 
 if __name__ == '__main__':

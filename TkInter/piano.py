@@ -15,20 +15,30 @@ else :
         print("Your python version is : ",major,minor)
         print("... I guess it will work !")
     import tkinter as tk
-    from tkinter import filedialog 
+    from tkinter import filedialog
 from math import pi,sin
 import collections
 import subprocess
 from observer import *
+from wave_generator import generateOctaves
+
 
 class Piano :
     def __init__(self,parent,octaves) :
         self.parent=parent
         self.octaves=[]
-        frame=tk.Frame(self.parent,bg="yellow")
+        self.frame=tk.Frame(self.parent,bg="yellow")
+
+
+
+
+
         for octave in range(octaves) :
-            self.create_octave(frame,octave+2)
-        frame.pack(fill="x")
+            self.create_octave(self.frame,octave+2)
+        self.frame.pack(fill="x")
+
+
+
 
     def create_octave(self,parent,degree=3) :
         model=Octave(degree)
@@ -38,7 +48,9 @@ class Piano :
         control.get_keyboard().grid(column=degree,row=0)
         view.get_screen().grid(column=degree,row=1)
         self.octaves.append(model)
-     
+        generateOctaves(degree,degree)
+
+
 class Octave(Subject) :
     def __init__(self,degree=3) :
         Subject.__init__(self)
@@ -80,7 +92,7 @@ class Screen(Observer):
         subprocess.call(["aplay",model.get_gamme()[key]])
         if self.info :
             self.info.config(text="Vous avez joue la note: "+ key + str(model.get_degree()))
-    
+
 
 class Keyboard :
     def __init__(self,parent,model) :
@@ -107,7 +119,7 @@ class Keyboard :
                 button.bind("<Button-1>",lambda event,x=key : self.play_note(x))
                 button.place(width=key_w,height=key_h,x=key_w*dx_white,y=0)
                 dx_white=dx_white+1
-    
+
     def play_note(self,key) :
         self.model.notify(key)
     def get_keyboard(self) :

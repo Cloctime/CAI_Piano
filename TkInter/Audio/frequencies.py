@@ -32,4 +32,3 @@ def octave_min_max(min,max):
        frequencies.append(octave)
     cursor.executemany("INSERT INTO frequencies VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);", frequencies)
     connect.commit()
-    print("yo")
