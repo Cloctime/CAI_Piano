@@ -57,9 +57,9 @@ if __name__ == "__main__" :
 
 
     boutonGenerate = tk.Button(frame, text="generate octaves",command=lambda :generateOctaves())   #lambda pour éviter d'appeler dès l'exécution !!!
-    boutontest = tk.Button(frame, text="test",command=lambda :print(type(fetchEntry(e1))))
+    #boutontest = tk.Button(frame, text="test",command=lambda :print(type(fetchEntry(e1))))
     frame.pack()
     boutonGenerate.pack()
-    boutontest.pack()
+    #boutontest.pack()
     e1.pack()
     mw.mainloop()
