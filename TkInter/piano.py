@@ -90,6 +90,7 @@ class Screen(Observer):
             if key not in model.gamme.keys() :
                 raise AssertionError
         subprocess.call(["aplay",model.get_gamme()[key]])
+        print(model.get_gamme()[key])
         if self.info :
             self.info.config(text="Vous avez joue la note: "+ key + str(model.get_degree()))
 

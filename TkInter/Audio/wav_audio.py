@@ -27,7 +27,7 @@ import subprocess
   sorties :
     data = liste des échantillons
     framerate = fréquence d'échantillonage
-    return 
+    return
 """
 def open_wav(filename):
     data=[]                                      # liste des échantillons, vide si fichier pas mono ou pas sur 16 bits
@@ -36,11 +36,11 @@ def open_wav(filename):
 ##    if (file.getnchannels() != 1):               # test Mono
 ##        print('Le fichier son doit être mono.')
 ##    elif (file.getsampwidth() != 2):             # test profondeur encodage 16 bits
-##        print('Le fichier son doit être encodé sur 16 bits. (Ici: '+str(8*file.getsampwidth())+' bits.)')         
+##        print('Le fichier son doit être encodé sur 16 bits. (Ici: '+str(8*file.getsampwidth())+' bits.)')
 ##    else :
     for i in range(file.getnframes()):            # parcours de la suite des échantillons ( getnframes() = nombre total d'échantillons )
         value = file.readframes(1)                # lecture d'un échantillon et passage au suivant
-        data.append(struct.unpack("=h",value)[0]) # formule auto-magique pour le décodage...         
+        data.append(struct.unpack("=h",value)[0]) # formule auto-magique pour le décodage...
     file.close()
     return data,framerate
 
@@ -66,7 +66,7 @@ def save_wav(filename,data,framerate):
         data[i] = int(data[i]) # au cas où une valeur non entière traînerait...
         # écrétage si valeur en dehors de l'intervalle [-32767,+32767]
         if data[i]<-32767 : data[i]=-32767
-        elif data[i]>32767: data[i]=32767                   
+        elif data[i]>32767: data[i]=32767
         file.writeframes(wave.struct.pack('h',data[i])) # codage et écriture échantillon 16 bits signés
     print("saving WAV file : '"+filename+"' done !")
     file.close()
@@ -81,7 +81,7 @@ def save_wav(filename,data,framerate):
   sorties :
     data = liste des échantillons
 '''
-def wav_sinus(file ='sinus.wav',f=440,framerate=8000,duration=2):   
+def wav_sinus(file ='sinus.wav',f=440,framerate=8000,duration=2):
     data =[int(30000*math.cos(2*math.pi*f*i/framerate)) for i in range(int(framerate*duration))] # framerate*duration = nombre total d'échantillons
     save_wav(file,data,framerate)
     return data

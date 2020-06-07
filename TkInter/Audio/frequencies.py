@@ -1,8 +1,11 @@
 # https://fr.wikipedia.org/wiki/Note_de_musique
 import sqlite3
 
-def octave_min_max(min,max):
-    connect = sqlite3.connect("Audio/frequencies.db")
+def octave_min_max(min,max,context=0):
+    if context == 0:
+        connect = sqlite3.connect("Audio/frequencies.db")
+    else:
+        connect = sqlite3.connect("Audio/frequencies.db")
     cursor = connect.cursor()
     cursor.execute("DROP TABLE IF EXISTS frequencies")
     cursor.execute("CREATE TABLE frequencies ( \

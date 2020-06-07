@@ -67,17 +67,23 @@ view.grid(4)
 view.packing()
 view.update()
 
+
 frameGenerator = tk.Frame(frame)
 frameGenerator.pack(side="left")
+viewGenerator = ViewGenerator(frameGenerator)
 
-list = tk.Listbox(frameGenerator)
-list.pack()
-notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-for note in notes:
-    list.insert("end", note)
-
-buttonAjouter = tk.Button(frameGenerator, text="ok")
-buttonAjouter.pack(side="bottom")
+# list = tk.Listbox(frameGenerator)
+# list.pack()
+# notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+# for note in notes:
+#     list.insert("end", note)
+#
+# buttonAjouter = tk.Button(frameGenerator, text="ok")
+# buttonAjouter.pack(side="bottom")
+# listOctave = tk.Listbox(frameGenerator)
+# listOctave.pack(side="top")
+# for i in range(0, 12):
+#     listOctave.insert("end", i)
 
 frame.pack()
 
