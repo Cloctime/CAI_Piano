@@ -122,15 +122,7 @@ if __name__ == "__main__" :
     mw.geometry("360x300")
     mw.title("Generateur de fichier au format WAV")
 
-    notes=[]
-    modelList = ModelList(notes)
-    viewList = ViewList(mw)
-    viewList.update(modelList)
-    modelList.attach(viewList)
-    controllerList = ControllerList(modelList,viewList)
-
-    button = tk.Button(mw, text="enregistrer l'accord",command=lambda :generate_chords(modelList.get_data(),slider.get()))
-    button.pack()
+    viewGenerator = ViewGenerator(mw)
 
 
 
