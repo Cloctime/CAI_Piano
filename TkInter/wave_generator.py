@@ -17,6 +17,7 @@ def generateOctaves(min, max):
         min=0
     if max>11:
         max = 11
+    print("wait during the generation of octave "+str(min)+" to "+str(max))
     octave_min_max(min, max)
     generate_notes()
 
@@ -90,7 +91,12 @@ class ViewGenerator():
         modelList.attach(self)
         controllerList = ControllerList(modelList,self)
 
-        button = tk.Button(parent, text="enregistrer l'accord",command=lambda :generate_chords(modelList.get_data()))
+        slider = tk.Scale(parent, orient = 'horizontal', from_ = 1, to = 9, resolution = 1,
+                        tickinterval = 2, length = 250, label = "duration")
+        slider.set(1)
+        slider.pack()
+
+        button = tk.Button(parent, text="enregistrer l'accord et le jouer",command=lambda :generate_chords(modelList.get_data(),slider.get()))
         button.pack()
     def update(self,model):
         self.list.delete(0, "end")
@@ -123,7 +129,7 @@ if __name__ == "__main__" :
     modelList.attach(viewList)
     controllerList = ControllerList(modelList,viewList)
 
-    button = tk.Button(mw, text="enregistrer l'accord",command=lambda :generate_chords(modelList.get_data()))
+    button = tk.Button(mw, text="enregistrer l'accord",command=lambda :generate_chords(modelList.get_data(),slider.get()))
     button.pack()
 
 

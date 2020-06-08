@@ -72,6 +72,7 @@ frameGenerator = tk.Frame(frame)
 frameGenerator.pack(side="left")
 viewGenerator = ViewGenerator(frameGenerator)
 
+
 # list = tk.Listbox(frameGenerator)
 # list.pack()
 # notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
