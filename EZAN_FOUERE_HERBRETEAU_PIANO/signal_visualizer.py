@@ -19,20 +19,27 @@ else :
     from tkinter import filedialog
 from math import pi,sin,cos
 
+
+
 class View :
-    def __init__(self,parent,bg="white",width=600,height=300,frequency=1):
+    def __init__(self,parent,bg="white",width=600,height=300):
         self.canvas=tk.Canvas(parent,bg=bg,width=width,height=height)
-        self.a,self.f,self.p=1.0,frequency,0.0
+        self.a,self.f,self.p=1.0,1.0,0.0
         self.signal=[]
         self.width,self.height=width,height
         self.units=1
         self.canvas.bind("<Configure>",self.resize)
+        self.signal_id=0
+        self.update(self.f)
+
+
 
     def vibration(self,t,harmoniques=1,impair=True):
         a,f,p=self.a,self.f,self.p
         somme=0
         for h in range(1,harmoniques+1) :
-            somme=somme + (a*1.0/h)*sin(2*pi*(f*h)*t-p)
+
+            somme=somme + (a/h)*sin(2*pi*(f*h)*t-p)
         return somme
 
     def generate_signal(self,period=2,samples=100.0):
@@ -43,20 +50,25 @@ class View :
             self.signal.append([t*Tech,self.vibration(t*Tech)])
         return self.signal
 
-    def update(self):
+    def update(self,frequency=1):
         print("View : update()")
+        self.f=frequency
         self.generate_signal()
+
         if self.signal :
             self.plot_signal(self.signal)
 
     def plot_signal(self,signal,color="red"):
+
+        self.canvas.delete(self.signal_id)
+
         w,h=self.width,self.height
         signal_id=None
         if signal and len(signal) > 1:
             print(self.units)
             plot = [(x*w,h/2.0*(1-y*1.0/(self.units/2.0))) for (x, y) in signal]
-            signal_id=self.canvas.create_line(plot, fill=color, smooth=1, width=3,tags="sound")
-        return signal_id
+            self.signal_id=self.canvas.create_line(plot, fill=color, smooth=1, width=3,tags="sound")
+        return self.signal_id
 
     def grid(self,steps=2):
         self.units=steps
@@ -81,7 +93,6 @@ class View :
 
     def packing(self) :
         self.canvas.pack(expand=1,fill="both",padx=6)
-
 
 
 
@@ -130,7 +141,7 @@ def listNotes():
 
 
 class ListApp(tk.Tk):
-    def __init__(self):
+    def __init__(self,parent):
         super().__init__()
         self.list = tk.Listbox(self)
         self.notes=listNotes()
@@ -140,6 +151,15 @@ class ListApp(tk.Tk):
 
         self.list.pack()
         self.print_btn.pack(fill=tk.BOTH)
+
+        self.parent=parent
+
+        self.frame=tk.Frame(self.parent,borderwidth=5,width=360,height=300,bg="green")
+        self.frame.pack()
+        self.view=View(self.frame)
+        self.view.grid(4)
+        self.view.packing()
+
 
     def create_btn(self, mode):
         cmd = lambda: self.list.config(selectmode=mode)
@@ -151,33 +171,15 @@ class ListApp(tk.Tk):
         selection = self.list.curselection()
         selec=[self.list.get(i) for i in selection][0]
         freq=self.notes.get(selec)
-        print(freq)
 
+        self.view.update(freq)
 
-        for c in mw.winfo_children():
-            c.destroy()
-        frame=tk.Frame(mw,borderwidth=5,width=360,height=300,bg="green")
-        frame.pack()
-        view=View(frame,frequency=freq)
-        view.grid(4)
-        view.packing()
-        view.update()
-        mw.mainloop()
-
-
+        
 
 if __name__ == "__main__" :
     mw = tk.Tk()
     mw.geometry("360x300")
     mw.title("Visualisation de signal sonore")
-    # frame=tk.Frame(mw,borderwidth=5,width=360,height=300,bg="green")
-    # frame.pack()
-    # view=View(frame)
-    # view.grid(4)
-    #
-        #
-    # view.packing()
-    # view.update()
-    # mw.mainloop()
-    list=ListApp()
+
+    list=ListApp(mw)
     mw.mainloop()
