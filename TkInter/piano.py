@@ -19,7 +19,7 @@ else :
 from math import pi,sin
 import collections
 import subprocess
-#from observer import *
+from observer import *
 from wave_generator import generateOctaves
 
 
