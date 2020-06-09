@@ -24,7 +24,7 @@ from wave_generator import generateOctaves
 
 
 class Piano() :
-    def __init__(self,parent,octaves,obs) :
+    def __init__(self,parent,octaves,obs=0) :
         self.parent=parent
         self.octaves=[]
         self.frame=tk.Frame(self.parent,bg="yellow")
@@ -49,6 +49,31 @@ class Piano() :
         self.octaves.append(model)
         generateOctaves(degree,degree)
 
+
+
+    def ajouterOctaveSuivante(self):
+        max = 0
+        for octave in self.octaves:
+            if octave.degree > max:
+                max= octave.degree
+
+        degree = max+1
+        if degree > 11:
+            print("on ne peux pas créer une octave plus élevée")
+        else:
+            self.create_octave(self.frame, degree)
+
+    def ajouterOctavePrecedente(self):
+        min = 3
+        for octave in self.octaves:
+            if octave.degree < min:
+                min= octave.degree
+
+        degree = min-1
+        if degree < 0:
+            print("on ne peux pas créer une octave plus faible")
+        else:
+            self.create_octave(self.frame, degree)
 
 class Octave(Subject) :
     def __init__(self,degree=3) :
@@ -141,7 +166,8 @@ class Keyboard :
 
     def defineLastKey(self,key):
         self.piano.lastKey=key+str(self.degree)
-        self.piano.notify()
+        if self.piano.obs!=0:
+            self.piano.notify()
 
 
 

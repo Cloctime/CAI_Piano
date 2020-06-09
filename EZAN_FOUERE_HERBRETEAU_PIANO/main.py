@@ -32,9 +32,9 @@ class Combine(Observer):
         octaves=1
         self.piano=Piano(self.frame,octaves,self)
         self.lastKey=self.piano.lastKey
-        boutonOctavePrev = tk.Button(self.frame, text="ajouter octave",command=lambda :ajouterOctavePrecedente())
+        boutonOctavePrev = tk.Button(self.frame, text="ajouter octave",command=lambda :self.piano.ajouterOctavePrecedente())
         boutonOctavePrev.pack(side="left")
-        boutonOctaveNext = tk.Button(self.frame, text="ajouter octave",command=lambda :ajouterOctaveSuivante())
+        boutonOctaveNext = tk.Button(self.frame, text="ajouter octave",command=lambda :self.piano.ajouterOctaveSuivante())
         boutonOctaveNext.pack(side="right")
         frameGenerator = tk.Frame(self.frame)
         frameGenerator.pack(side="left")
@@ -65,6 +65,7 @@ class Combine(Observer):
             self.lastKey=self.lastKey[0]+"sharp"+self.lastKey[2]
         freq=self.listFreq.get(self.lastKey)
         print("freq:",freq)
+        self.listFreq=listNotes()
         self.view.update(freq)
 
 

@@ -14,18 +14,21 @@ import shutil
 ## Création d'un fichier audio au format WAV (PCM 8 bits stéréo 44100 Hz)
 ## Son de forme sinusoïdale sur chaque canal
 
-def create_note_wav(degree,name,left_frequency,right_frequency) :
+def create_note_wav(degree,name,left_frequency,right_frequency,t=1) :
     if type(degree) != str :
         degree=str(degree)
+    if t==1:
+        file= name+degree+".wav"
+    else:
+        file= name+degree+"t"+str(t)+"s.wav"
 
-    file= name+degree+".wav"
     sound=wave.open("Sounds/"+file,'w')
     nb_channels = 2    # stéreo
     nb_bytes = 1       # taille d'un échantillon : 1 octet = 8 bits
     sampling = 44100   # fréquence d'échantillonnage
-    left_level = 1     # niveau canal de gauche (0 à 1) ? '))
+    left_level = 1    # niveau canal de gauche (0 à 1) ? '))
     right_level= 0.5    # niveau canal de droite (0 à 1) ? '))
-    duration = 1
+    duration = t
     nb_samples = int(duration*sampling)
     params = (nb_channels,nb_bytes,sampling,nb_samples,'NONE','not compressed')
     sound.setparams(params)    # création de l'en-tête (44 octets)
@@ -47,15 +50,15 @@ def create_note_wav(degree,name,left_frequency,right_frequency) :
 
     sound.close()
 
-def generate_notes():
+def generate_notes(t=1):
     connect = sqlite3.connect("Audio/frequencies.db")
     cursor = connect.cursor()
     gammes=cursor.execute("SELECT * FROM frequencies")
     notes=["octave","C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
     for gamme in gammes :
         for i in range(1,len(gamme)) :
-            if not os.path.isfile("Sounds/"+str(notes[i])+str(gamme[0])+".wav"):
-                create_note_wav(gamme[0],notes[i],gamme[i],2*gamme[i])
+            if (not os.path.isfile("Sounds/"+str(notes[i])+str(gamme[0])+".wav") and t==1) or (not os.path.isfile("Sounds/"+str(notes[i])+str(gamme[0])+"t"+str(t)+"s.wav") and t!=1):
+                create_note_wav(gamme[0],notes[i],gamme[i],2*gamme[i],t)
 
 
 if __name__ == '__main__':
