@@ -115,7 +115,7 @@ class Screen(Observer):
         if __debug__:
             if key not in model.gamme.keys() :
                 raise AssertionError
-    #    subprocess.call(["aplay",model.get_gamme()[key]])
+        subprocess.call(["aplay",model.get_gamme()[key]])
         if self.info :
             self.info.config(text="Vous avez joue la note: "+ key + str(model.get_degree()))
 
@@ -136,7 +136,6 @@ class Keyboard :
                 delta_w,delta_h=3/4.,2/3.
                 delta_x=3/5.
                 button=tk.Button(self.keyboard,name=key.lower(),width=3,height=6,bg="black")
-                button.bind("<Button-1>",lambda event,x=key : self.play_note(x))
                 button.bind("<Button-1>",lambda event,x=key : self.defineLastKey(x))
 
 
@@ -147,13 +146,8 @@ class Keyboard :
                     dx_black=dx_black+1
             else :
                 button=tk.Button(self.keyboard,name=key.lower(),bg = "white")
-                button.bind("<Button-1>",lambda event,x=key : self.play_note(x))
 
                 button.bind("<Button-1>",lambda event,x=key : self.defineLastKey(x))
-
-
-
-                #button.bind("<Button-1>",lambda event,x=key : print(x)) #moi
 
 
                 button.place(width=key_w,height=key_h,x=key_w*dx_white,y=0)
@@ -168,6 +162,8 @@ class Keyboard :
 
     def defineLastKey(self,key):
         self.piano.lastKey=key+str(self.degree)
+        self.play_note(key)
+        #subprocess.call(["aplay","Sounds/"+key+str(self.degree)+".wav"])
         if self.piano.obs!=0:
             self.piano.notify()
 
