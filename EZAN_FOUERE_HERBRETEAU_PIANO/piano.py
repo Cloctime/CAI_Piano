@@ -27,11 +27,20 @@ class Piano() :
     def __init__(self,parent,octaves,obs=0) :
         self.parent=parent
         self.octaves=[]
-        self.frame=tk.Frame(self.parent,bg="yellow")
+        self.frame1=tk.LabelFrame(self.parent,bg="yellow", text="Piano")
+        boutonOctavePrev = tk.Button(self.frame1, text="ajouter octave",command=lambda :self.ajouterOctavePrecedente())
+        boutonOctavePrev.pack(side="left")
+        boutonOctaveNext = tk.Button(self.frame1, text="ajouter octave",command=lambda :self.ajouterOctaveSuivante())
+        boutonOctaveNext.pack(side="right")
+
+        self.frame1.pack(expand="1")
+
+        self.frame=tk.Frame(self.frame1,bg="yellow")
+
         self.obs=obs
         for octave in range(octaves) :
             self.create_octave(self.frame,octave+2)
-        self.frame.pack(fill="x")
+        self.frame.pack(fill="x", expand="1")
 
         self.lastKey=None
 

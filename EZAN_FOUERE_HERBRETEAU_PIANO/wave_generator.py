@@ -80,20 +80,37 @@ class ModelList():
 class ViewGenerator():
     def __init__(self,parent):
         self.parent=parent
-        self.list=tk.Listbox(parent)
+        txt= "Pour créer un accord, tapez dans la ligne de saisie une note suivie d'une octave\n Les notes sont les suivantes\n"+"C, C#, D, D#, E, F, F#, G, G#, A, A#, B\n"+"Et les octaves peuvent être choisies de 0 à 11\n exemple de note: C#3"
+        label = tk.Label(self.parent, text=txt)
+        label.pack()
+        framelist = tk.Frame(parent)
+        self.list=tk.Listbox(framelist)
         self.list.configure(height=4)
-        self.list.pack()
-        self.entry=tk.Entry(parent)
-        self.entry.pack()
+        self.list.pack(side="left")
+
+        texte = tk.Label(framelist, text="Liste des notes pour créer l'accord. Sélectionnez et appuyez sur suppr pour supprimer une note de la liste", wraplength="300", width="40")
+        texte.pack(side="left")
+
+        framelist.pack()
+
+        frameEntry = tk.Frame(parent)
+        self.entry=tk.Entry(frameEntry)
+        self.entry.pack(side="left")
+
+        texte1 = tk.Label(frameEntry, text="Saisissez une note puis validez avec entrée", wraplength="300", width="40")
+        texte1.pack(side="left")
+
+        frameEntry.pack()
+
         modelList = ModelList([])
         self.update(modelList)
         modelList.attach(self)
         controllerList = ControllerList(modelList,self)
 
         slider = tk.Scale(parent, orient = 'horizontal', from_ = 1, to = 9, resolution = 1,
-                        tickinterval = 2, length = 250, label = "duration")
+                        tickinterval = 2, length = 250, label = "Durée de l'accord")
         slider.set(1)
-        slider.pack()
+        slider.pack(pady="20")
 
         button = tk.Button(parent, text="enregistrer l'accord et le jouer",command=lambda :generate_chords(modelList.get_data(),slider.get()))
         button.pack()
