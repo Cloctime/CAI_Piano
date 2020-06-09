@@ -29,6 +29,7 @@ class Combine(Observer):
     def __init__(self,parent):
         self.parent=parent
         self.frame=tk.Frame(mw,borderwidth=5,width=360,height=300)
+        self.listFreq=listNotes()
         octaves=1
         self.piano=Piano(self.frame,octaves,self)
         self.lastKey=self.piano.lastKey
@@ -44,7 +45,7 @@ class Combine(Observer):
         for note in notes:
             list.insert("end", note)
 
-        self.listFreq=listNotes()
+
         print(self.listFreq)
 
 
@@ -59,14 +60,18 @@ class Combine(Observer):
 
         self.frame.pack()
 
-    def update(self,piano):
+    def updateSignal(self,piano):
         self.lastKey=piano.lastKey
         if self.lastKey[1]=='#':
             self.lastKey=self.lastKey[0]+"sharp"+self.lastKey[2]
         freq=self.listFreq.get(self.lastKey)
         print("freq:",freq)
-        self.listFreq=listNotes()
         self.view.update(freq)
+
+    def updateList(self):
+        self.listFreq.update(listNotes())
+        print(self.listFreq)
+
 
 
 

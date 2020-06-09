@@ -37,7 +37,7 @@ class Piano() :
 
 
     def notify(self):
-        self.obs.update(self)
+        self.obs.updateSignal(self)
 
     def create_octave(self,parent,degree=3) :
         model=Octave(degree)
@@ -48,6 +48,8 @@ class Piano() :
         view.get_screen().grid(column=degree,row=1)
         self.octaves.append(model)
         generateOctaves(degree,degree)
+        if self.obs!=0:
+            self.obs.updateList()
 
 
 
