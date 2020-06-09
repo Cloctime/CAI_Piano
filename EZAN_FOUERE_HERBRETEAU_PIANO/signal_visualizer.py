@@ -65,7 +65,6 @@ class View :
         w,h=self.width,self.height
         signal_id=None
         if signal and len(signal) > 1:
-            print(self.units)
             plot = [(x*w,h/2.0*(1-y*1.0/(self.units/2.0))) for (x, y) in signal]
             self.signal_id=self.canvas.create_line(plot, fill=color, smooth=1, width=3,tags="sound")
         return self.signal_id
@@ -174,7 +173,7 @@ class ListApp(tk.Tk):
 
         self.view.update(freq)
 
-        
+
 
 if __name__ == "__main__" :
     mw = tk.Tk()

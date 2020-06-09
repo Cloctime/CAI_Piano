@@ -31,7 +31,7 @@ class Piano() :
         self.obs=obs
         for octave in range(octaves) :
             self.create_octave(self.frame,octave+2)
-        self.frame.pack(fill="x")
+        self.frame.pack(fill="x",expand=1)
 
         self.lastKey=None
 
@@ -149,10 +149,7 @@ class Keyboard :
 
                 button.bind("<Button-1>",lambda event,x=key : self.defineLastKey(x))
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 4bd0d712ca22d5a7f4654a1d9d1f896189213e53
                 button.place(width=key_w,height=key_h,x=key_w*dx_white,y=0)
                 dx_white=dx_white+1
 
