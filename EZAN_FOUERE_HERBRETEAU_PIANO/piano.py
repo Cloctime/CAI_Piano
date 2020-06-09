@@ -151,11 +151,6 @@ class Keyboard :
 
                 button.bind("<Button-1>",lambda event,x=key : self.defineLastKey(x))
 
-
-
-                #button.bind("<Button-1>",lambda event,x=key : print(x)) #moi
-
-
                 button.place(width=key_w,height=key_h,x=key_w*dx_white,y=0)
                 dx_white=dx_white+1
 

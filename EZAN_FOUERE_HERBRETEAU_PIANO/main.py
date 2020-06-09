@@ -47,9 +47,6 @@ class Combine(Observer):
 
         print(self.listFreq)
 
-
-
-
         self.view=View(self.frame)
         self.view.grid(4)
         self.view.packing()
