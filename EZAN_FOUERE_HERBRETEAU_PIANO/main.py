@@ -37,13 +37,12 @@ class Combine(Observer):
         boutonOctavePrev.pack(side="left")
         boutonOctaveNext = tk.Button(self.frame, text="ajouter octave",command=lambda :self.piano.ajouterOctaveSuivante())
         boutonOctaveNext.pack(side="right")
+
+
         frameGenerator = tk.Frame(self.frame)
         frameGenerator.pack(side="left")
-        list = tk.Listbox(frameGenerator)
-        list.pack()
-        notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-        for note in notes:
-            list.insert("end", note)
+        viewGenerator = ViewGenerator(frameGenerator)
+
 
 
         print(self.listFreq)

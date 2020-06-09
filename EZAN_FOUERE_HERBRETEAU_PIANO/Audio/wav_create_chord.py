@@ -9,14 +9,13 @@ from wave_generator import *
 ''' ouverture des fichiers des trois notes, et récupération de leur liste d'échantillons
 Remarque : les trois sons doivent bien entendu avoir été créé avec la même fréquence d'échantillonnage... '''
 
-def generate_chords(harmonics):
+def generate_chords(harmonics, t=1):
     print(harmonics)
     data=[]
     dataX=[]
     noteList = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
     for noteSTR in harmonics:
-        if not os.path.isfile("Sounds/"+noteSTR+".wav"):
-            print("not C3")
+        if (not os.path.isfile("Sounds/"+noteSTR+".wav") and t==1) or (not os.path.isfile("Sounds/"+noteSTR+"t"+str(t)+"s.wav") and t!=1):
             note = noteSTR[0]
             degree=""
             if noteSTR[1] == "#":
@@ -37,10 +36,14 @@ def generate_chords(harmonics):
                 print("cette note n'est pas supportée: "+note+degree)
                 return
             else:
-                generateOctaves(int(degree),int(degree))
+                print("wait during the generation of octave "+str(degree))
+                octave_min_max(int(degree), int(degree))
+                generate_notes(t)
 
-
-        X, framerate = open_wav("Sounds/"+noteSTR+'.wav')
+        if t==1:
+            X, framerate = open_wav("Sounds/"+noteSTR+'.wav')
+        else:
+            X, framerate = open_wav("Sounds/"+noteSTR+"t"+str(t)+"s.wav")
         dataX.append(X)
 
     if len(dataX)!=0 :
@@ -53,10 +56,12 @@ def generate_chords(harmonics):
             data.append(float(1.0/float(len(harmonics))*addition))
 
             addition=0
-        print(data)
-        name= "Sounds/"+'x'.join(harmonics)+"chord.wav"
+        if t==1:
+            name= "Sounds/"+'x'.join(harmonics)+"chord.wav"
+        else:
+            name= "Sounds/"+'x'.join(harmonics)+"chordt"+str(t)+"s.wav"
         save_wav(name, data, framerate)
-
+        subprocess.call(["aplay",name])
 
 
 
