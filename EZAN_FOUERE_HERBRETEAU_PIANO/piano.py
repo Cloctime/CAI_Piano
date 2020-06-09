@@ -40,11 +40,7 @@ class Piano() :
         self.obs=obs
         for octave in range(octaves) :
             self.create_octave(self.frame,octave+2)
-<<<<<<< HEAD
-        self.frame.pack(fill="x",expand=1)
-=======
         self.frame.pack(fill="x", expand="1")
->>>>>>> a2299869ea370086c256b8ebe279bc9bcfa5419d
 
         self.lastKey=None
 

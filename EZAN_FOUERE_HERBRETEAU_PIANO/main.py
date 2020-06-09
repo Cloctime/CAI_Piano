@@ -8,7 +8,7 @@ if major==2 and minor==7 :
     import tkFileDialog as filedialog
 elif major==3 and minor==6 :
     import tkinter as tk
-    from tkinter import filedialog
+    from tkinter import filedialog,messagebox
 else :
     print("Your python version is : ",major,minor)
     print("... I guess it will work !")
@@ -22,6 +22,11 @@ from piano import *
 from signal_visualizer import *
 from wave_generator import *
 
+
+
+def on_closing():
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        mw.destroy()
 
 
 def alert_popup(title, message):
@@ -71,20 +76,9 @@ class Combine(Observer):
 
 
 
-<<<<<<< HEAD
-        self.view=View(self.frame)
-        self.view.grid(4)
-        self.view.packing()
-        self.view.update()
-        self.view.update(0)
-
-
-        self.frame.pack(expand=1,fill="both")
-=======
 
 
         self.frame.pack(expand="1")
->>>>>>> a2299869ea370086c256b8ebe279bc9bcfa5419d
 
     def updateSignal(self,piano):
         self.lastKey=piano.lastKey
@@ -125,13 +119,13 @@ if __name__=="__main__":
     mw.title("Leçon de Piano")
     c=Combine(mw)
     group="Charles EZAN \nAlexandre FOUERE \nGuillaume Herbreteau"
-<<<<<<< HEAD
+
     menubar = tk.Menu(mw)
     mw.config(menu=menubar)
     menufichier = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label="Fichier", menu=menufichier)
     menufichier.add_command(label="Quitter", command = mw.destroy)
-=======
+
 
     menubar = tk.Menu(mw)
     mw.config(menu=menubar)
@@ -140,11 +134,12 @@ if __name__=="__main__":
     menubar.add_cascade(label="Fichier", menu=menufichier)
     menufichier.add_command(label="Quitter", command = mw.destroy)
 
->>>>>>> a2299869ea370086c256b8ebe279bc9bcfa5419d
+
     menuhelp = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label="Help", menu=menuhelp)
     menuhelp.add_command(label="Membres du groupe", command=lambda: alert_popup("Membres du groupe",group))
 
 
+    mw.protocol("WM_DELETE_WINDOW", on_closing)
 
     mw.mainloop()
