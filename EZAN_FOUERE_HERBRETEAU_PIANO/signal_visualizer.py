@@ -50,9 +50,11 @@ class View :
             self.signal.append([t*Tech,self.vibration(t*Tech)])
         return self.signal
 
-    def update(self,frequency=1):
+    def update(self,frequency=1,amplitude=1,phase=0):
         print("View : update()")
         self.f=frequency
+        self.a=amplitude
+        self.p=phase
         self.generate_signal()
 
         if self.signal :
@@ -141,30 +143,49 @@ def listNotes():
 
 class ListApp(tk.Tk):
     def __init__(self,parent):
-        super().__init__()
-        self.list = tk.Listbox(self)
+        self.parent=parent
+        self.list_frame=tk.LabelFrame(self.parent,borderwidth=5,width=360,height=300)
+        self.list = tk.Listbox(self.list_frame)
+        self.list.pack()
         self.notes=listNotes()
         self.list.insert(0, *listNotes())
-        self.print_btn = tk.Button(self, text="Afficher signal",
+        self.print_btn = tk.Button(self.list_frame, text="Afficher note",
                                    command=self.print_selection)
 
-        self.list.pack()
-        self.print_btn.pack(fill=tk.BOTH)
+
 
         self.parent=parent
 
-        self.frame=tk.Frame(self.parent,borderwidth=5,width=360,height=300,bg="green")
+        self.frame=tk.LabelFrame(self.parent,borderwidth=5,width=360,height=300)
         self.frame.pack()
         self.view=View(self.frame)
         self.view.grid(4)
         self.view.packing()
+        self.list_frame.pack(side='left',padx=30)
+        self.print_btn.pack(fill=tk.BOTH)
 
 
-    def create_btn(self, mode):
-        cmd = lambda: self.list.config(selectmode=mode)
-        return tk.Button(self, command=cmd,
-                         text=mode.capitalize())
+        self.slider_frame=tk.LabelFrame(self.parent,borderwidth=5,width=360,height=300)
 
+        slider_frequency = tk.Scale(self.slider_frame, orient = 'horizontal', from_ = 0, to = 15, resolution = 1,
+                        tickinterval = 5, length = 250, label = "Fréquence")
+        slider_frequency.set(1)
+        slider_frequency.pack(pady="20")
+
+        slider_magnitude = tk.Scale(self.slider_frame, orient = 'horizontal', from_ = 0, to = 2, resolution = 0.1,
+                        tickinterval = 1, length = 250, label = "Amplitude")
+        slider_magnitude.set(1)
+        slider_magnitude.pack(pady="20")
+
+        slider_phase = tk.Scale(self.slider_frame, orient = 'horizontal', from_ = -180, to = 180, resolution = 1,
+                        tickinterval = 90, length = 250, label = "Phase")
+        slider_phase.set(0)
+        slider_phase.pack(pady="20")
+
+        button_draw = tk.Button(self.slider_frame, text="Dessiner signal",command=lambda :self.view.update(slider_frequency.get(),slider_magnitude.get(),slider_phase.get()))
+        button_draw.pack()
+
+        self.slider_frame.pack(side='right',padx=30)
     def print_selection(self):
 
         selection = self.list.curselection()
@@ -177,8 +198,12 @@ class ListApp(tk.Tk):
 
 if __name__ == "__main__" :
     mw = tk.Tk()
-    mw.geometry("360x300")
+    mw.geometry("530x700")
     mw.title("Visualisation de signal sonore")
 
     list=ListApp(mw)
+
+
+
+
     mw.mainloop()

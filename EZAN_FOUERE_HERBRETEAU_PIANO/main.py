@@ -119,17 +119,13 @@ if __name__=="__main__":
     mw.title("Leçon de Piano")
     c=Combine(mw)
     group="Charles EZAN \nAlexandre FOUERE \nGuillaume Herbreteau"
-
     menubar = tk.Menu(mw)
     mw.config(menu=menubar)
     menufichier = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label="Fichier", menu=menufichier)
     menufichier.add_command(label="Quitter", command = mw.destroy)
-
-
     menubar = tk.Menu(mw)
     mw.config(menu=menubar)
-
     menufichier = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label="Fichier", menu=menufichier)
     menufichier.add_command(label="Quitter", command = mw.destroy)
