@@ -184,7 +184,7 @@ class Keyboard :
 
 if __name__ == "__main__" :
     mw = tk.Tk()
-    mw.geometry("360x300")
+    mw.geometry("800x300")
     octaves=2
     mw.title("La leçon de piano à " + str(octaves) + " octaves")
     piano=Piano(mw,octaves)

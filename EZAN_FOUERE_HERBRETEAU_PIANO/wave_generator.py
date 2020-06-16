@@ -135,7 +135,7 @@ class ControllerList():
 
 if __name__ == "__main__" :
     mw = tk.Tk()
-    mw.geometry("360x300")
+    mw.geometry("500x300")
     mw.title("Generateur de fichier au format WAV")
 
     viewGenerator = ViewGenerator(mw)
